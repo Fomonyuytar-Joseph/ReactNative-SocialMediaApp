@@ -20,65 +20,55 @@ import {
   Text,
   View,
 } from 'react-native';
-
+import {Posts} from './data';
+import PopularPost from './components/PopularPost';
 const screenWidth = Dimensions.get('screen').width;
 
 const val = new Animated.Value(0);
 
 const App: FC = () => {
-
   const animateValues = () => {
-    Animated.timing(val,{
-      toValue:1,
-      duration:500,
-      useNativeDriver:false,
+    Animated.timing(val, {
+      toValue: 1,
+      duration: 500,
+      useNativeDriver: false,
     }).start();
-  }
+  };
 
-  useEffect(()=>{
+  useEffect(() => {
     animateValues();
-
-  },[])
+  }, []);
 
   const coverInterpolate = val.interpolate({
     inputRange: [0, 1],
     outputRange: [9, 1],
   });
 
-
   const imageInterpolate = val.interpolate({
-    inputRange:[0,1],
-    outputRange:["200%","100%"]
-  })
+    inputRange: [0, 1],
+    outputRange: ['200%', '100%'],
+  });
 
   const mainInterpolate = val.interpolate({
-    inputRange:[0,1],
-    outputRange:[0,1]
+    inputRange: [0, 1],
+    outputRange: [0, 1],
+  });
 
-  })
+  const dynamicFlex = {
+    flex: coverInterpolate,
+  };
 
+  const dynamicImage = {
+    height: imageInterpolate,
+  };
 
-  const dynamicFlex={
-    flex:coverInterpolate
-  }
-
-  const dynamicImage={
-
-    height:imageInterpolate
-
-  }
-
-  const dynamicMain={
-     
-    opacity:mainInterpolate
-
-  }
+  const dynamicMain = {
+    opacity: mainInterpolate,
+  };
 
   return (
     <View style={styles.container}>
-
       <Animated.View style={dynamicFlex}>
-
         <Animated.Image
           source={{
             uri: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8dHJvcGljYWwlMjBiZWFjaHxlbnwwfHwwfHw%3D&w=1000&q=80',
@@ -87,14 +77,21 @@ const App: FC = () => {
           width={screenWidth}
           height={200}
         />
-
       </Animated.View>
 
-      <Animated.View style={[styles.main,dynamicMain]}>
+      <Animated.View style={[styles.main, dynamicMain]}>
+        <View style={styles.popular}>
+          <PopularPost
+            id={1}
+            author={1}
+            comments={[]}
+            likes={[]}
+            text="Helloo Joseph"
+            timeStamp={12121212121212}
+          />
+        </View>
 
-        <View style={styles.popular}></View>
-
-        <View style={{flex:3, backgroundColor:"blue"}}></View>
+        <View style={{flex: 3}}></View>
       </Animated.View>
     </View>
   );
@@ -104,18 +101,19 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  
+
   main: {
     flex: 3,
+    backgroundColor: '#f1f1f1',
   },
   coverImage: {
     width: screenWidth,
-    height: "100%"
+    height: '100%',
   },
-  popular:{
-    flex:1,
-    backgroundColor:"red"
-  }
+  popular: {
+    flex: 1,
+    justifyContent:"center"
+  },
 });
 
 export default App;
