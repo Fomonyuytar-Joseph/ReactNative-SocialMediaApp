@@ -1,13 +1,15 @@
 import {View, Text, StyleSheet, Dimensions} from 'react-native';
 import React, {FC} from 'react';
 import {Post} from '../data/types';
-
+import Icon from 'react-native-vector-icons/AntDesign';
+  
 const screenWidth = Dimensions.get('screen').width;
 
 const PopularPost: FC<Post> = props => {
   return (
     <View style={styles.PopularPost}>
       <Text>{props.text}</Text>
+     <Text><Icon name='like2' size={20}/></Text> 
     </View>
   );
 };
