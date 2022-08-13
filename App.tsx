@@ -51,6 +51,13 @@ const App: FC = () => {
     outputRange:["200%","100%"]
   })
 
+  const mainInterpolate = val.interpolate({
+    inputRange:[0,1],
+    outputRange:[0,1]
+
+  })
+
+
   const dynamicFlex={
     flex:coverInterpolate
   }
@@ -61,9 +68,17 @@ const App: FC = () => {
 
   }
 
+  const dynamicMain={
+     
+    opacity:mainInterpolate
+
+  }
+
   return (
     <View style={styles.container}>
+
       <Animated.View style={dynamicFlex}>
+
         <Animated.Image
           source={{
             uri: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8dHJvcGljYWwlMjBiZWFjaHxlbnwwfHwwfHw%3D&w=1000&q=80',
@@ -72,8 +87,15 @@ const App: FC = () => {
           width={screenWidth}
           height={200}
         />
+
       </Animated.View>
-      <View style={styles.main}></View>
+
+      <Animated.View style={[styles.main,dynamicMain]}>
+
+        <View style={styles.popular}></View>
+
+        <View style={{flex:3, backgroundColor:"blue"}}></View>
+      </Animated.View>
     </View>
   );
 };
@@ -90,6 +112,10 @@ const styles = StyleSheet.create({
     width: screenWidth,
     height: "100%"
   },
+  popular:{
+    flex:1,
+    backgroundColor:"red"
+  }
 });
 
 export default App;
